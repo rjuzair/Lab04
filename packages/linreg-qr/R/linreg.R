@@ -54,7 +54,7 @@ linreg <- function(formula, data) {
 
   var_r_coeff<-residual_var*solve(t(R)%*%R)
   t_values<-r_coeff/sqrt(diag(var_r_coeff))
-  p_values<- pt(-abs(t_values), df)
+  p_values <- 2 * pt(-abs(t_values), df)
 
 
   #calculating standard error

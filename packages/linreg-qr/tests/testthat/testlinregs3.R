@@ -1,4 +1,3 @@
-context("linreg")
 
 data("iris")
 
@@ -51,3 +50,13 @@ test_that("summary() works", {
   expect_output(summary(linreg_mod), "Residual standard error: 0.6[0-9]* on 147 degrees of freedom")
 })
 
+
+test_that("results match stats::lm", {
+  linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  lm_mod <- lm(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+  lm_coefs <- summary(lm_mod)$coefficients
+
+  expect_equal(unname(coef(linreg_mod)), unname(coef(lm_mod)))
+  expect_equal(unname(linreg_mod$std_error), unname(lm_coefs[, "Std. Error"]))
+  expect_equal(unname(linreg_mod$p_values), unname(lm_coefs[, "Pr(>|t|)"]))
+})

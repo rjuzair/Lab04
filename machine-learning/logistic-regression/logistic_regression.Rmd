@@ -1,0 +1,127 @@
+---
+title: "Logistic Regression and Basis Function Expansion"
+subtitle: "Predicting diabetes from plasma glucose and age"
+output:
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(ggplot2)
+```
+
+## Data
+
+The [Pima Indians Diabetes](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
+dataset contains medical measurements for 768 women of Pima heritage, together with
+whether they were diagnosed with diabetes. We model diabetes using two predictors:
+**plasma glucose concentration** and **age**.
+
+```{r data}
+df <- read.csv("../data/pima-indians-diabetes.csv", header = FALSE)
+colnames(df) <- c("pregnancies", "glucose", "blood_pressure", "skin_thickness",
+                  "insulin", "bmi", "pedigree", "age", "diabetes")
+df$diabetes_label <- factor(df$diabetes, levels = c(0, 1), labels = c("No", "Yes"))
+
+ggplot(df, aes(x = age, y = glucose, colour = diabetes_label)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Plasma glucose vs age", x = "Age (years)",
+       y = "Plasma glucose concentration", colour = "Diabetes")
+```
+
+Diabetic patients tend to have higher glucose levels, but the two classes overlap heavily,
+so a model using only these two features will not separate them perfectly.
+
+## Logistic regression
+
+$$
+P(\text{diabetes} = 1 \mid x) = \frac{1}{1 + e^{-(\theta_0 + \theta_1 \cdot \text{glucose} + \theta_2 \cdot \text{age})}}
+$$
+
+```{r logistic}
+model <- glm(diabetes ~ glucose + age, data = df, family = binomial)
+summary(model)$coefficients
+
+misclassification <- function(y, prob, r) mean(as.integer(prob > r) != y)
+df$prob <- predict(model, type = "response")
+```
+
+### Classification threshold r = 0.5
+
+```{r threshold-05}
+r <- 0.5
+df$pred <- factor(as.integer(df$prob > r), levels = c(0, 1), labels = c("No", "Yes"))
+cat("Training misclassification rate:", round(misclassification(df$diabetes, df$prob, r), 4))
+
+# Decision boundary: theta0 + theta1 * glucose + theta2 * age = logit(r)
+theta <- coef(model)
+boundary <- function(age, r) (log(r / (1 - r)) - theta[1] - theta[3] * age) / theta[2]
+
+ggplot(df, aes(x = age, y = glucose, colour = pred)) +
+  geom_point(alpha = 0.7) +
+  geom_function(fun = function(a) boundary(a, r), colour = "black", linewidth = 1) +
+  labs(title = "Predicted class with decision boundary (r = 0.5)",
+       x = "Age (years)", y = "Plasma glucose concentration", colour = "Predicted")
+```
+
+The decision boundary is linear in (age, glucose): older patients are classified as diabetic
+at lower glucose levels.
+
+### Effect of the threshold
+
+```{r thresholds}
+for (r in c(0.2, 0.5, 0.8)) {
+  cat(sprintf("r = %.1f  misclassification = %.4f  predicted positive = %.1f%%\n",
+              r, misclassification(df$diabetes, df$prob, r), 100 * mean(df$prob > r)))
+}
+```
+
+Lowering the threshold to 0.2 flags far more patients as diabetic (higher sensitivity, more false
+positives); raising it to 0.8 does the opposite. In a screening setting, a lower threshold may be
+preferable even though the overall error rate increases.
+
+## Basis function expansion
+
+To allow a non-linear decision boundary, we add polynomial features of the two predictors:
+
+$$
+z_1 = x_1^4,\quad z_2 = x_1^3 x_2,\quad z_3 = x_1^2 x_2^2,\quad z_4 = x_1 x_2^3,\quad z_5 = x_2^4
+$$
+
+where $x_1$ is glucose and $x_2$ is age. Features are standardised to keep the optimisation stable.
+
+```{r basis-expansion}
+x1 <- df$glucose
+x2 <- df$age
+expanded <- data.frame(
+  diabetes = df$diabetes,
+  glucose = x1, age = x2,
+  z1 = x1^4, z2 = x1^3 * x2, z3 = x1^2 * x2^2, z4 = x1 * x2^3, z5 = x2^4
+)
+expanded[, -1] <- scale(expanded[, -1])
+
+model_expanded <- glm(diabetes ~ ., data = expanded, family = binomial)
+prob_expanded <- predict(model_expanded, type = "response")
+cat("Training misclassification rate (basis expansion):",
+    round(misclassification(df$diabetes, prob_expanded, 0.5), 4))
+
+df$pred_expanded <- factor(as.integer(prob_expanded > 0.5), levels = c(0, 1),
+                           labels = c("No", "Yes"))
+ggplot(df, aes(x = age, y = glucose, colour = pred_expanded)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Predicted class with basis function expansion (r = 0.5)",
+       x = "Age (years)", y = "Plasma glucose concentration", colour = "Predicted")
+```
+
+## Conclusions
+
+- Glucose is the strongest predictor of diabetes; age adds a smaller but significant positive effect.
+- Plain logistic regression produces a **linear** decision boundary in (age, glucose) with a
+  training misclassification rate of about **26%** at r = 0.5.
+- The classification threshold trades sensitivity against specificity and should be chosen
+  according to the cost of missed diagnoses versus false alarms.
+- Basis function expansion lets the model learn a **curved** boundary and lowers the training
+  misclassification rate to about **24%**. Its true
+  benefit should be judged on held-out data, since extra flexibility also increases the risk of
+  overfitting.

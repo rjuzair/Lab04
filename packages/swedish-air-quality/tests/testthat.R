@@ -1,5 +1,5 @@
 library(testthat)
-library(Lab05)
+library(swedishairquality)
 
 
-test_check("Lab05")
+test_check("swedishairquality")

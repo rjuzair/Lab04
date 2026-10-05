@@ -1,4 +1,4 @@
 library(testthat)
-library(Lab04)
+library(linregqr)
 
-test_check("Lab04")
+test_check("linregqr")
