@@ -67,8 +67,6 @@ aqiGet <- function() {
   # rawLkpg <- httr::GET("https://datavardluft.smhi.se/52North/api/v1/timeseries/5714/getData?timespan=P1Y/2021-09-01") #2016-09-25T17:00:00Z/2021-09-25T17:00:00Z")
   # rawSthlm <- httr::GET("https://datavardluft.smhi.se/52North/api/v1/timeseries/59/getData?timespan=P1Y/2021-09-01")
   
-  # another site: token=1131c365418e237331b11166a52e94e157f63ef4
-  # rawSthlm <- httr::GET("https://api.waqi.info/feed/Stockholm/?token=1131c365418e237331b11166a52e94e157f63ef4")
   
   # transform from raw to Character
   rawcharLkpg <- rawToChar(rawLkpg$content)
