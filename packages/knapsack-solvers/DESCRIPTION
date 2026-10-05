@@ -1,0 +1,25 @@
+Package: Lab6
+Type: Package
+Title: The knapsack problem
+Version: 1.0
+Date: 2021-10-21
+Authors@R: c(person("Raja Uzair", "Saeed", email = "rajsa233@student.liu.se", role = c("aut")),
+             person("Daniel", "Persson", email = "danpe586@student.liu.se", role = c("aut", "cre")))
+Maintainer: Daniel Persson <danpe586@student.liu.se>
+Description: Calculates the knapsack problem with 3 different algorithms brute force, dynamic, greedy.
+RoxygenNote: 7.1.2
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.5.0)
+Import: parallel,
+    utils,
+    head
+Suggests: 
+    rmarkdown,
+    knitr,
+    profvis,
+    qpdf,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
