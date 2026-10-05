@@ -1,0 +1,18 @@
+Package: classicalgorithms
+Type: Package
+Title: Euclidean GCD and Dijkstra Shortest-Path Algorithms
+Version: 2.0.0
+Date: 2021-09-14
+Authors@R: c(
+    person("Raja Uzair", "Saeed", email = "rajsa233@student.liu.se", role = c("aut", "cre")),
+    person("Daniel", "Persson", email = "danpe586@student.liu.se", role = "aut"))
+Description: Implementations of the Euclidean algorithm for the greatest
+    common divisor of two numbers and Dijkstra's algorithm for single-source
+    shortest paths on a weighted graph stored as an edge-list data frame.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.5.0)
+Suggests: testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.1.1

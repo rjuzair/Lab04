@@ -1,0 +1,24 @@
+Package: knapsack
+Type: Package
+Title: Brute-Force, Dynamic-Programming and Greedy Knapsack Solvers
+Version: 1.0.0
+Date: 2021-10-21
+Authors@R: c(
+    person("Raja Uzair", "Saeed", email = "rajsa233@student.liu.se", role = c("aut", "cre")),
+    person("Daniel", "Persson", email = "danpe586@student.liu.se", role = "aut"))
+Description: Solves the 0/1 knapsack problem with three algorithms - exhaustive
+    brute force (optionally parallelised), dynamic programming and a greedy
+    approximation - and compares their run time with profiling.
+License: GPL-3
+Encoding: UTF-8
+Depends: R (>= 3.5.0)
+Imports:
+    parallel
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    profvis
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+RoxygenNote: 7.1.2

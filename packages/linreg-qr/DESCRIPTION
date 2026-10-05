@@ -1,0 +1,25 @@
+Package: linregqr
+Type: Package
+Title: Linear Regression via QR Decomposition
+Version: 3.1.0
+Date: 2021-10-13
+Authors@R: c(
+    person("Raja Uzair", "Saeed", email = "rajsa233@student.liu.se", role = c("aut", "cre")),
+    person("Daniel", "Persson", email = "danpe586@student.liu.se", role = "aut"))
+Description: Fits multiple linear regression models using the QR
+    decomposition and provides an S3 class 'linreg' with print(), summary(),
+    coef(), residuals(), pred() and diagnostic plot() methods.
+License: GPL-3
+Encoding: UTF-8
+Depends: R (>= 3.5.0)
+Imports:
+    ggplot2,
+    cowplot,
+    stats
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+RoxygenNote: 7.1.2

@@ -2,4 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+*.Rproj
+*.Rcheck/
+*.tar.gz
 inst/doc
