@@ -13,7 +13,7 @@ Each package is a self-contained, documented R package with a `testthat` test su
 |---|---|---|
 | [**linregqr**](packages/linreg-qr) | Linear regression via QR decomposition | S3 class with `print`, `summary`, `coef`, `resid`, `pred`, `plot`; validated against `lm()` |
 | [**knapsack**](packages/knapsack-solvers) | 0/1 knapsack solvers | Brute force (parallelised), dynamic programming and greedy; profiling with `profvis` |
-| [**swedishairquality**](packages/swedish-air-quality) | PM10 air quality for six Swedish cities | REST API client (`httr`, `jsonlite`) + Shiny dashboard |
+| [**swedishairquality**](packages/swedish-air-quality) | PM10 air quality for six Swedish cities | REST API client (`httr`, `jsonlite`), offline simulated sample data, Shiny dashboard |
 | [**classicalgorithms**](packages/classic-algorithms) | Euclidean GCD and Dijkstra shortest paths | Input validation, bundled example data |
 
 Install any package straight from GitHub:
