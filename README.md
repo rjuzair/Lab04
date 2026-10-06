@@ -3,7 +3,7 @@
 R packages and machine-learning reports from the MSc in Statistics and Machine Learning at **Linköping University** (Advanced R Programming and Machine Learning courses).
 
 ![R](https://img.shields.io/badge/R-276DC3?logo=r&logoColor=white)
-![testthat](https://img.shields.io/badge/tests-testthat-success)
+[![R-CMD-check](https://github.com/rjuzair/Lab04/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/rjuzair/Lab04/actions/workflows/R-CMD-check.yml)
 ![Shiny](https://img.shields.io/badge/Shiny-blue?logo=rstudio&logoColor=white)
 
 ## R packages
@@ -33,6 +33,7 @@ remotes::install_github("rjuzair/statistical-computing-with-r", subdir = "packag
 # run a package's tests
 testthat::test_local("packages/linreg-qr")
 ```
+Every push runs `R CMD check` on all four packages with GitHub Actions.
 
 ## Authors
 Raja Uzair Saeed and Daniel Persson (packages were developed as pair-programming assignments).
