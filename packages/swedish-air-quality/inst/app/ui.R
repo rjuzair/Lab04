@@ -1,11 +1,9 @@
 library(shiny)
-# Define UI for application that draws a histogram
 shinyUI(fluidPage(
     
     # Application title
-    titlePanel("Air Quality Index (AQI) ~ PM10"),
+    titlePanel("PM10 air quality in Swedish cities"),
     
-    # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
             radioButtons("city",
@@ -16,9 +14,9 @@ shinyUI(fluidPage(
             )
         ),
         
-        # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("Plot")
+            plotOutput("Plot"),
+            helpText("Showing the bundled simulated sample data (not real measurements).")
         )
     )
 ))

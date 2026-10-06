@@ -3,8 +3,10 @@ library(swedishairquality)
 
 server <- function(input, output, session) {
 
+    pm10 <- aqiGet()
+
     city_data <- reactive({
-        as.data.frame(aqiGet()[[as.numeric(input$city)]])
+        pm10[[as.numeric(input$city)]]
     })
 
     output$Plot <- renderPlot({

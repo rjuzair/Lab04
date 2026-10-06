@@ -1,25 +1,26 @@
 Package: swedishairquality
 Type: Package
 Title: Air Quality (PM10) Data for Major Swedish Cities
-Version: 2.0.0
-Date: 2021-09-25
+Version: 2.1.0
+Date: 2026-10-06
 Authors@R: c(
     person("Raja Uzair", "Saeed", email = "rajsa233@student.liu.se", role = c("aut", "cre")),
     person("Daniel", "Persson", email = "danpe586@student.liu.se", role = "aut"))
-Description: Wraps the SMHI air quality REST API to download recent PM10
-    particulate matter measurements for six Swedish cities (Linkoping,
-    Stockholm, Malmo, Gothenburg, Lulea and Umea) and visualises them in a
-    Shiny web application.
+Description: PM10 particulate matter data for six Swedish cities (Linkoping,
+    Stockholm, Malmo, Gothenburg, Lulea and Umea), visualised in a Shiny web
+    application. Ships a simulated sample dataset that works offline and can
+    download live data from a 52North timeseries REST API such as the one
+    SMHI used to host.
 License: GPL-3
 Encoding: UTF-8
+LazyData: true
 Depends: R (>= 3.5.0)
 Imports:
     jsonlite,
-    httr,
-    dplyr
+    httr
 Suggests:
     shiny,
-    testthat (>= 3.0.0),
+    testthat (>= 3.1.7),
     knitr,
     rmarkdown
 VignetteBuilder: knitr
